@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    ECL Builder Development Harness
+    <ECLBuilder 
+      apiUrl="/snowstorm/snomed-ct"
+      branch="MAIN/2022-01-31"
+      eclString="<< 64572001 |Disease (disorder)| : * = *"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ECLBuilder from './components/ECLBuilder.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ECLBuilder
   }
 }
 </script>
@@ -23,6 +26,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
