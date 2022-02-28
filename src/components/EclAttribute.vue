@@ -1,8 +1,10 @@
 <template>
-    <div>
-        ECLAttribute
-        attributeName: <SubExpressionConstraint :model="model.attributeName"/>
-        <div v-if="model.expressionComparisonOperator">
+    <div class="attribute-container">
+        <div>
+            With attribute
+        </div>
+        <SubExpressionConstraint :model="model.attributeName"/>
+        <div v-if="model.expressionComparisonOperator" class="grid-container">
             <select v-model="model.expressionComparisonOperator">
                 <option>=</option>
                 <option>!=</option>
@@ -35,4 +37,15 @@ export default {
 </script>
 
 <style scoped>
+.attribute-container {
+    background-color: #c9e5f4;
+    /* display: inline-block; */
+    /* text-align: left; */
+    padding: 5px;
+    border-radius: 10px;
+}
+.attribute-container div {
+    display: inline-block;
+    margin: 5px;
+}
 </style>

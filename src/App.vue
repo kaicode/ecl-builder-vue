@@ -4,7 +4,7 @@
     <ECLBuilder 
       apiUrl="/snowstorm/snomed-ct"
       branch="MAIN/2022-01-31"
-      eclString="<< 64572001 |Disease (disorder)| : * = *"/>
+      eclString="<< 64572001 |Disease (disorder)| AND 64572001 |Disease (disorder)| : * = *, * = 100000 or * = 200000"/>
   </div>
 </template>
 

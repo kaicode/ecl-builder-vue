@@ -1,18 +1,17 @@
 <template>
-  <div>
+  <div class="grid-container">
     <ConstraintOperator :model="model"/>
-    <label>Any:<input type="checkbox" v-model="model.wildcard"/></label>
-    <input type="text" v-model="model.conceptId" v-if="!model.wildcard"/>
-    <span v-if="model.wildcard">
+    <input type="text" v-model="model.conceptId"/>
+    <div class="add">+</div>
+    <!-- <span v-if="model.wildcard">
       <input type="text" value="*" disabled/>
-    </span>
-    <div class=dropdown>
+    </span> -->
+    <!-- <div class=dropdown>
         <button>Add</button>
         <div class="dropdown-content">
             <div>And refinement</div>
-            <!-- <div v-on:click="">And refinement</div> -->
         </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -30,6 +29,9 @@ export default {
 </script>
 
 <style scoped>
+.grid-container {
+  margin-bottom: 5px;
+}
 .dropdown {
   position: relative;
   display: inline-block;

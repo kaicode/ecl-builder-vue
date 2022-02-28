@@ -1,6 +1,6 @@
 <template>
     <div>
-        attribute <EclAttribute :model="model.attribute"/>
+        <EclAttribute :model="model.attribute"/>
     </div>
 </template>
 

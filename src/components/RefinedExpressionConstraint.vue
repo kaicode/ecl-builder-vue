@@ -2,6 +2,12 @@
   <div>
     <SubExpressionConstraint :model="model.subexpressionConstraint"/>
     <EclRefinement :model="model.eclRefinement"/>
+    <div class="dropdown">
+      <span>Add</span>
+        <div class="dropdown-content">
+          <p>Hello World!</p>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -22,16 +28,17 @@ export default {
 
 <style scoped>
 .dropdown {
-  position: relative;
-  display: inline-block;
+  float: right;
+  margin: 10px 0;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
+  margin-left: -90px;
   background-color: #f9f9f9;
   box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.2);
-  padding: 12px 16px;
+  padding: 0 16px;
   z-index: 1;
 }
 

@@ -1,6 +1,9 @@
 <template>
-    <div>
+    <div class="eclRefinement">
         <SubRefinement :model="model.subRefinement"/>
+        <div v-for="disjunctionSubRefinement in model.disjunctionSubRefinements" v-bind:key="disjunctionSubRefinement.id">
+            Or <SubRefinement :model="disjunctionSubRefinement"/>
+        </div>
     </div>
 </template>
 
@@ -18,4 +21,7 @@ export default {
 </script>
 
 <style scoped>
+.eclRefinement {
+    padding-left: 15px;
+}
 </style>
