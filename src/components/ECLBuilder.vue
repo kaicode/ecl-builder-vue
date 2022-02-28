@@ -1,6 +1,6 @@
 <template>
   <div style="display: grid; margin: 10px" class="ecl-builder">
-    <ExpressionConstraint :model="model"></ExpressionConstraint>
+    <ExpressionConstraint :model="model" allowRefinement="true"/>
     <h3>Output</h3>
     <textarea cols="60" rows="5" disabled v-if="eclOutput" v-model="eclOutput"></textarea>
     <textarea cols="60" rows="5" hidden v-if="eclModelString" v-model="eclModelString"></textarea>

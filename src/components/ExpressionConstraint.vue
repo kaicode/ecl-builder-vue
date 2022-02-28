@@ -1,6 +1,6 @@
 <template>
   <div class="expression-constraint">
-    Focus concepts<div class="dropdown" >
+    Focus concepts<div v-if="allowRefinement" class="dropdown" >
       <div class="add" v-if="!model.exclusionExpressionConstraint">+</div>
       <div class="dropdown-content">
         <div class="item-subtitle">Add constraint:</div>
@@ -22,13 +22,13 @@
     </div>
 
     <div v-if="model.wildcard || model.conceptId">
-      <SubExpressionConstraint :model="model" v-on:addAttribute="subExpressionAddAttribute" :allowRefinement="true"/>
+      <SubExpressionConstraint :model="model" :allowRefinement="true" v-on:addAttribute="addAttribute(model)"/>
     </div>
     <div v-if="model.eclRefinement">
-      <RefinedExpressionConstraint :model="model" v-on:addAttribute="refinedExpressionAddAttribute" :allowRefinement="true"/>
+      <RefinedExpressionConstraint :model="model" :allowRefinement="true" v-on:addAttribute="refinedExpressionAddAttribute"/>
     </div>
     <div v-if="model.conjunctionExpressionConstraints || model.disjunctionExpressionConstraints || model.exclusionExpressionConstraint">
-      <CompoundExpressionConstraint :model="model" v-on:addAttribute="subExpressionAddAttribute"/>
+      <CompoundExpressionConstraint :model="model" v-on:addAttribute="compoundExpressionAddAttribute"/>
     </div>
   </div>
 </template>
@@ -40,7 +40,8 @@ import CompoundExpressionConstraint from './CompoundExpressionConstraint.vue'
 export default {
   name: 'ExpressionConstraint',
   props: {
-    model: Object
+    model: Object,
+    allowRefinement: String
   },
   components: {
     SubExpressionConstraint,
@@ -69,10 +70,10 @@ export default {
     addConjunctionToExisting() {
       this.model.conjunctionExpressionConstraints.push(this.newConcept());
     },
-    subExpressionAddAttribute() {
-      this.$set(this.model, 'subexpressionConstraint', JSON.parse(JSON.stringify(this.model)));
-      this.clearConcept(this.model);
-      this.$set(this.model, 'eclRefinement', {
+    addAttribute(model) {
+      this.$set(model, 'subexpressionConstraint', JSON.parse(JSON.stringify(model)));
+      this.clearConcept(model);
+      this.$set(model, 'eclRefinement', {
         subRefinement: {
           eclAttributeSet: {
             subAttributeSet: {
@@ -83,7 +84,6 @@ export default {
       });
     },
     refinedExpressionAddAttribute() {
-      console.log('refinedExpressionAddAttribute');
       let attSet = this.model.eclRefinement.subRefinement.eclAttributeSet;
       if (!attSet.conjunctionAttributeSet) {
         this.$set(attSet, 'conjunctionAttributeSet', []);
@@ -93,6 +93,13 @@ export default {
           id: this.random(),
           attribute: this.newAttribute() 
         });
+    },
+    compoundExpressionAddAttribute(event) {
+      console.log(event);
+      let tempModel = JSON.parse(JSON.stringify(event));
+      this.$set(event, 'nestedExpressionConstraint', tempModel);
+      this.clearConcept(event);
+      this.addAttribute(event.nestedExpressionConstraint);
     },
     newConcept() {
       return {
