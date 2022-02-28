@@ -11,6 +11,7 @@
         <option value="memberOf">^ Member of</option>
     </select>
     <input type="text" v-model="model.conceptId"/>
+    <!-- <ConceptTypeahead/> -->
     <div class=dropdown>
         <button>Add</button>
         <div class="dropdown-content">
@@ -18,15 +19,19 @@
             <div >And refinement</div>
         </div>
     </div>
-
   </div>
 </template>
 
 <script>
+// import ConceptTypeahead from './ConceptTypeahead.vue'
+
 export default {
   name: 'FocusConcept',
   props: {
     model: Object
+  },
+  components: {
+    // ConceptTypeahead
   }
 }
 </script>

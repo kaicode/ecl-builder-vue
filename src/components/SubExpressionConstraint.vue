@@ -1,7 +1,7 @@
 <template>
   <div class="grid-container">
     <ConstraintOperator :model="model"/>
-    <input type="text" v-model="model.conceptId"/>
+    <ConceptTypeahead :model="model"/>
     <div class="add">+</div>
     <!-- <span v-if="model.wildcard">
       <input type="text" value="*" disabled/>
@@ -17,13 +17,15 @@
 
 <script>
 import ConstraintOperator from './ConstraintOperator.vue'
+import ConceptTypeahead from './ConceptTypeahead.vue'
 export default {
   name: 'SubExpressionConstraint',
   props: {
     model: Object
   },
   components: {
-    ConstraintOperator
+    ConstraintOperator,
+    ConceptTypeahead
   }
 }
 </script>
