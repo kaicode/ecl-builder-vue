@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
-import AsyncComputed from 'vue-async-computed'
+import vueCustomElement from 'vue-custom-element'
 
 Vue.config.productionTip = false
-Vue.use(AsyncComputed)
+Vue.use(vueCustomElement)
 
 new Vue({
   render: h => h(App),

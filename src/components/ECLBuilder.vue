@@ -1,8 +1,9 @@
 <template>
-  <div style="display: grid; margin: 10px">
-    <ExpressionConstraint :model="model"/>
+  <div style="display: grid; margin: 10px" class="ecl-builder">
+    <ExpressionConstraint :model="model"></ExpressionConstraint>
     <h3>Output</h3>
     <textarea cols="60" rows="5" disabled v-if="eclOutput" v-model="eclOutput"></textarea>
+    <textarea cols="60" rows="5" hidden v-if="eclModelString" v-model="eclModelString"></textarea>
   </div>
 </template>
 
@@ -16,35 +17,34 @@ export default {
     ExpressionConstraint
   },
   props: {
-    apiUrl: String,
+    apiurl: String,
     branch: String,
-    eclString: String,
-    eclOutput: String
+    eclstring: String
   },
-  data: function() {
+  emits: ['eclOutput'],
+  computed: {
+    eclModelString() {
+      console.log('eclModelString');
+      let modelDeepClone = JSON.stringify(this.model);
+      this.updateOutput(this.model);
+      // let modelDeepClone = JSON.parse(JSON.stringify(this.model));
+      return modelDeepClone;
+    }
+  },
+  data() {
     return {
-      model: {}
+      model: {},
+      eclOutput: "loading"
     }
   },
-  asyncComputed: {
-    eclOutput() {
-      return this.updateOutput(this.model);
-    }
-  },
-  // watch: {
-  //   model: function(val) {
-  //     this.updateOutput(val);
-  //   }
-  // },
   mounted: function() {
     axios({
-      url: this.apiUrl + '/util/ecl-string-to-model',
+      url: this.apiurl + '/util/ecl-string-to-model',
       method: 'post',
-      data: this.eclString,
+      data: this.eclstring,
       headers: {'Content-Type': 'text/plain'}
     })
     .then(response => {
-      console.log('Response ', response.data);
       this.model = this.transformIn(response.data);
     });
   },
@@ -74,14 +74,16 @@ export default {
     updateOutput: function(model) {
       let modelDeepClone = JSON.parse(JSON.stringify(model));
       this.transformOut(modelDeepClone);
-      return axios({
-          url: this.apiUrl + '/util/ecl-model-to-string',
+      let context = this;
+      axios({
+          url: this.apiurl + '/util/ecl-model-to-string',
           method: 'post',
           data: modelDeepClone,
           headers: {'Content-Type': 'text/plain'}
         })
         .then(response => {
-          return response.data.eclString;
+          context.eclOutput = response.data.eclString;
+          context.$emit('eclOutput', context.eclOutput);
         });
     },
     transformOut: function(model) {
@@ -91,9 +93,7 @@ export default {
       for (var prop in model) {
         if (!pattern.test(prop) && Object.prototype.hasOwnProperty.call(model, prop)) {
           if (prop === 'operator' && model[prop].length === 0) {
-            console.log('op');
             delete model[prop];
-            console.log('op done');
           } else if (prop === 'conceptId') {
             let conceptId = model[prop];
             model.wildcard = conceptId === '*';
@@ -124,6 +124,13 @@ export default {
 </script>
 
 <style>
+.ecl-builder {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 input, select {
   padding: 3px;
 }

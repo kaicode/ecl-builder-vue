@@ -1,0 +1,28 @@
+<meta charset="utf-8">
+<title>ecl-builder demo</title>
+<script src="https://unpkg.com/vue"></script>
+<script src="./ecl-builder.js"></script>
+
+<div>
+    Web Component:
+    <div style="border: 1px solid black; margin: 10px; padding: 10px;">
+        <ecl-builder
+            apiurl="/snowstorm/snomed-ct"
+            branch="MAIN/2022-01-31"
+            eclstring="64572001 |Disease (disorder)| AND 64572001 |Disease (disorder)| : * = *, * = 100000 or * = 200000">
+        </ecl-builder>
+    </div>
+    <hr/>
+    Parent Webapp:
+    <div style="margin: 10px;">
+        <div>
+            <textarea cols="80" rows="5" class="outputArea"></textarea>
+        </div>
+    </div>
+</div>
+<script>
+var eclBuilder = document.querySelector("ecl-builder");
+eclBuilder.addEventListener("eclOutput", (event) => {
+  document.querySelector(".outputArea").value= event.detail[0];
+});
+</script>
