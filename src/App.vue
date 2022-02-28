@@ -5,7 +5,7 @@
     <ECLBuilder 
       apiurl="/snowstorm/snomed-ct"
       branch="MAIN/2022-01-31"
-      eclstring="64572001 |Disease (disorder)| : * = *, * = 100000 or * = 200000"/>
+      eclstring="< 64572001 |Disease (disorder)|"/>
   </div>
 </template>
 

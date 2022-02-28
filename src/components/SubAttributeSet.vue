@@ -1,6 +1,6 @@
 <template>
     <div>
-        <EclAttribute :model="model.attribute"/>
+        <EclAttribute :model="model.attribute" :focusConcept="focusConcept"/>
     </div>
 </template>
 
@@ -9,7 +9,8 @@ import EclAttribute from './EclAttribute.vue'
 export default {
     name: 'SubAttributeSet',
     props: {
-        model: Object
+        model: Object,
+        focusConcept: Object
     },
     components: {
         EclAttribute

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <SubAttributeSet :model="model.subAttributeSet"/>
+        <SubAttributeSet :model="model.subAttributeSet" :focusConcept="focusConcept"/>
         <div v-for="conjunctionAttribute in model.conjunctionAttributeSet" v-bind:key="conjunctionAttribute.id">
             And <SubAttributeSet :model="conjunctionAttribute"/>
         </div>
@@ -15,7 +15,8 @@ import SubAttributeSet from './SubAttributeSet.vue'
 export default {
     name: 'EclAttributeSet',
     props: {
-        model: Object
+        model: Object,
+        focusConcept: Object
     },
     components: {
         SubAttributeSet

@@ -43,7 +43,7 @@ export default {
       model: Object,
       ecl: String
   },
-  data() {
+  data: function() {
     return {
       query: this.model.conceptId,
 
@@ -57,8 +57,7 @@ export default {
         activeFilter: true,
         termActive: true,
         descriptionType: "900000000000003001",
-        limit: 10,
-        ecl: this.ecl ? this.ecl : ""
+        limit: 10
       },
 
       // Limit the number of items which is shown at the list
@@ -117,6 +116,7 @@ export default {
         if (this.query === '*') {
           this.onHit('*');
         } else {
+          this.$set(this.data, 'ecl', this.ecl);
           this.fetch().then((response) => {
             if (response && this.query) {
               let data = response.data

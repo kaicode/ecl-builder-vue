@@ -37,18 +37,21 @@ export default {
       eclOutput: "loading"
     }
   },
-  mounted: function() {
-    axios({
-      url: this.apiurl + '/util/ecl-string-to-model',
-      method: 'post',
-      data: this.eclstring,
-      headers: {'Content-Type': 'text/plain'}
-    })
-    .then(response => {
-      this.model = this.transformIn(response.data);
-    });
+  mounted() {
+    this.stringToModel((newModel) => this.model = newModel);
   },
   methods: {
+    stringToModel: function(callback) {
+      axios({
+        url: this.apiurl + '/util/ecl-string-to-model',
+        method: 'post',
+        data: this.eclstring,
+        headers: {'Content-Type': 'text/plain'}
+      })
+      .then(response => {
+        callback(this.transformIn(response.data))
+      });    
+    },
     transformIn: function(model) {
       const pattern = /[0-9]+/;
       let context = this;

@@ -1,13 +1,13 @@
 <template>
     <div class="compoundExpressionConstraint">
         <div v-for="conjunctionExpressionConstraint in model.conjunctionExpressionConstraints" v-bind:key="conjunctionExpressionConstraint.id">
-            <span class="or">And </span><SubExpressionConstraint :model="conjunctionExpressionConstraint"/>
+            <span class="or">And </span><SubExpressionConstraint :model="conjunctionExpressionConstraint" v-on:addAttribute="addAttribute"/>
         </div>
         <div v-for="disjunctionExpressionConstraint in model.disjunctionExpressionConstraints" v-bind:key="disjunctionExpressionConstraint.id">
-            <span class="or">Or </span><SubExpressionConstraint :model="disjunctionExpressionConstraint"/>
+            <span class="or">Or </span><SubExpressionConstraint :model="disjunctionExpressionConstraint" v-on:addAttribute="addAttribute"/>
         </div>
         <div v-if="model.exclusionExpressionConstraint">
-            <span class="or">Minus </span><SubExpressionConstraint :model="model.exclusionExpressionConstraint"/>
+            <span class="or">Minus </span><SubExpressionConstraint :model="model.exclusionExpressionConstraint" v-on:addAttribute="addAttribute"/>
         </div>
     </div>
 </template>
@@ -21,6 +21,11 @@ export default {
     },
     components: {
         SubExpressionConstraint
+    },
+    methods: {
+        addAttribute: function() {
+            this.$emit('addAttribute');
+        }
     }
 }
 </script>
