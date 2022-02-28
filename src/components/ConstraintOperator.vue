@@ -1,5 +1,5 @@
 <template>
-    <select v-if="model.operator" v-model="model.operator">
+    <select v-model="model.operator">
         <option value="">Self</option>
         <option value="descendantof">&lt; Descendant of</option>
         <option value="descendantorselfof">&lt;&lt; Descendants or Self of</option>

@@ -24,10 +24,8 @@ export default {
   emits: ['eclOutput'],
   computed: {
     eclModelString() {
-      console.log('eclModelString');
       let modelDeepClone = JSON.stringify(this.model);
       this.updateOutput(this.model);
-      // let modelDeepClone = JSON.parse(JSON.stringify(this.model));
       return modelDeepClone;
     }
   },
@@ -141,11 +139,50 @@ input, select {
   background-color: #4ea24e;
   color: white;
   font-weight: bold;
-  border-radius: 10px;
-  padding: 0 5px;
+  border-radius: 11px;
+  padding: 0 6px;
   text-align: center;
   display: inline;
   cursor: pointer;
+  margin-left: 4px;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.dropdown-content {
+  display: none;
+  width: 200px;
+  margin-left: -100px;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0, 0.25);
+  z-index: 1;
+  border-radius: 4px;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown .item {
+  padding: 7px 15px;
+  border-bottom: 1px solid #ccc;
+}
+.dropdown .item:hover {
+  background-color: #3aa373;
+  color: white;
+}
+.dropdown .item-subtitle {
+  padding: 7px;
+  font-weight: bold;
+  color: grey;
+  border-bottom: 1px solid #ccc;
+  font-size: 0.9em;
+}
+.dropdown-content .item:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom: 0;
 }
 
 </style>
