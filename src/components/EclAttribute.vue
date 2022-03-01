@@ -3,7 +3,7 @@
     <div>
       With attribute
     </div>
-    <SubExpressionConstraint :model="model.attributeName" :ecl="attributeNameEcl"/>
+    <SubExpressionConstraint :model="model.attributeName" :ecl="domainAttributesECL"/>
     <div v-if="model.expressionComparisonOperator" class="grid-container">
       <select v-model="model.expressionComparisonOperator">
         <option>=</option>
@@ -20,6 +20,8 @@
     <div v-if="model.booleanComparisonOperator">
       Boolean concrete domains not yet supported.
     </div>
+    <!-- Trigger computed property -->
+    <div v-if="domainAttributesProxy==='xxx'">{{domainAttributesProxy}}</div>
   </div>
 </template>
 
@@ -37,13 +39,13 @@ export default {
   },
   computed: {
     domainAttributesProxy: function() {
-      if (this.focusConcept && this.focusConcept.conceptId) {
-        let parentConceptId = this.getConceptId(this.focusConcept.conceptId);
-        this.updateDomainAttributes(parentConceptId);
-        return parentConceptId;
-      } else {
-        return "";
+      // Used to set domainAttributesECL. Proxy is needed because async API call.
+      let parentConceptId = '';
+      if (this.focusConcept && this.focusConcept.operator != 'memberOf' && this.focusConcept.conceptId && !this.focusConcept.conceptId != '*') {
+        parentConceptId = this.getConceptId(this.focusConcept.conceptId);
       }
+      this.updateDomainAttributes(parentConceptId);
+      return parentConceptId;
     },
     attributeRangeEcl: function() {
       let ecl = '';
@@ -66,30 +68,33 @@ export default {
   },
   data: function() {
     return {
-      attributeNameEcl: '',
+      domainAttributesECL: '',
       domainAttributes: []
     }
   },
   methods: {
     updateDomainAttributes: function(parentConceptId) {
-      axios({
-        url: '/snowstorm/snomed-ct/mrcm/MAIN/domain-attributes',
-        method: 'get',
-        params: {
-          proximalPrimitiveModeling: false,
-          parentIds: parentConceptId
-        },
-        headers: {'Content-Type': 'text/plain'}
-      })
-      .then(response => {
-        console.log(response.data);
-        this.domainAttributes = response.data.items;
-        let conceptIds = [];
-        response.data.items.forEach(item => conceptIds.push(item.conceptId));
-        let newEcl = conceptIds.join(' OR ');
-        this.$set(this, 'attributeNameEcl', newEcl);
-        console.log('this.attributeNameEcl = ' + newEcl);
-      });  
+      if (parentConceptId) {
+        axios({
+          url: '/snowstorm/snomed-ct/mrcm/MAIN/domain-attributes',
+          method: 'get',
+          params: {
+            proximalPrimitiveModeling: false,
+            parentIds: parentConceptId
+          },
+          headers: {'Content-Type': 'text/plain'}
+        })
+        .then(response => {
+          console.log(response.data);
+          this.domainAttributes = response.data.items;
+          let conceptIds = [];
+          response.data.items.forEach(item => conceptIds.push(item.conceptId));
+          let newEcl = conceptIds.join(' OR ');
+          this.$set(this, 'domainAttributesECL', newEcl);
+        });
+      } else {
+        this.domainAttributesECL = '';
+      }
     },
     getConceptId: function(conceptIdAndTerm) {
       if (conceptIdAndTerm && conceptIdAndTerm.indexOf('|') != -1) {

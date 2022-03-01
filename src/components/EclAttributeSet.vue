@@ -2,10 +2,10 @@
     <div>
         <SubAttributeSet :model="model.subAttributeSet" :focusConcept="focusConcept"/>
         <div v-for="conjunctionAttribute in model.conjunctionAttributeSet" v-bind:key="conjunctionAttribute.id">
-            And <SubAttributeSet :model="conjunctionAttribute"/>
+            And <SubAttributeSet :model="conjunctionAttribute" :focusConcept="focusConcept"/>
         </div>
         <div v-for="disjunctionAttribute in model.disjunctionAttributeSet" v-bind:key="disjunctionAttribute.id">
-            Or <SubAttributeSet :model="disjunctionAttribute"/>
+            Or <SubAttributeSet :model="disjunctionAttribute" :focusConcept="focusConcept"/>
         </div>
     </div>
 </template>

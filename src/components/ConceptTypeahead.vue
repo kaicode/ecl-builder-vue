@@ -17,7 +17,10 @@
                 @keydown.esc="reset"
                 @blur="reset"
                 @input="update"/>
-
+        <div class="info" v-bind:class="{ show: ecl }">
+          <div class="icon">i</div>
+          <div class="info-message">Input constraints from <a href="http://snomed.org/mrcm" target="_blank">MRCM</a> are active.</div>
+        </div>
         <!-- the list -->
         <ul v-show="hasItems">
             <!-- for vue@1.0 use: ($item, item) -->
@@ -148,7 +151,7 @@ export default {
   display: inline-block;
 }
 .ConceptTypeahead input {
-  width: 25em;
+  width: 22em;
 }
 .ConceptTypeahead__input {
   width: 100%;
@@ -221,5 +224,38 @@ span {
 }
 .screen-name {
   font-style: italic;
+}
+.info {
+  display: inline-block;
+  /* margin-left: 3px; */
+  cursor: pointer;
+  visibility: hidden;
+
+  position: absolute;
+  margin-left: -22px;
+  margin-top: 4px;
+}
+.icon {
+  font-size: 0.75em;
+  font-weight: bold;
+  background-color: #5fb8e8;
+  border-radius: 10px;
+  padding: 0 7px;
+  /* border: 1px solid white; */
+  color: white;
+}
+.info.show {
+  visibility: visible;
+}
+.info-message {
+  position: absolute;
+  background-color: aliceblue;
+  padding: 10px 16px;
+  border-radius: 5px;
+  border: 1px solid #C8CFD6;
+  visibility: hidden;
+}
+.info:hover > .info-message {
+  visibility: visible;
 }
 </style>
