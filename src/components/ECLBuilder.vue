@@ -59,6 +59,8 @@ export default {
             model.conceptId = "*";
           } else if (prop === 'term') {
             model.conceptId += ' |' + model.term + '|';
+          } else if (prop === 'returnAllMemberFields') {
+            delete model[prop];
           } else if (Array.isArray(model[prop])) {
             let someArray = model[prop];
             someArray.forEach(function(value) {
