@@ -1,7 +1,7 @@
 <template>
   <div>
-    <SubExpressionConstraint :model="model.subexpressionConstraint" v-on:addAttribute="addAttribute" :allowRefinement="allowRefinement"/>
-    <EclRefinement :model="model.eclRefinement" :focusConcept="model.subexpressionConstraint"/>
+    <SubExpressionConstraint :apiurl="apiurl" :branch="branch" :model="model.subexpressionConstraint" v-on:addAttribute="addAttribute" :allowRefinement="allowRefinement"/>
+    <EclRefinement :apiurl="apiurl" :branch="branch" :model="model.eclRefinement" :focusConcept="model.subexpressionConstraint"/>
   </div>
 </template>
 
@@ -11,6 +11,8 @@ import EclRefinement from './EclRefinement.vue'
 export default {
   name: 'RefinedExpressionConstraint',
   props: {
+    apiurl: String,
+    branch: String,
     model: Object,
     allowRefinement: Boolean
   },

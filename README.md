@@ -12,7 +12,7 @@ npm run serve
 
 ### Compiles and minifies for production
 ```
-./node_modules/.bin/vue-cli-service build --target wc --inline-vue --name ecl-builder src/components/ECLBuilder.vue
+./node_modules/.bin/vue-cli-service build --target wc --inline-vue --name snomed-ecl-builder src/components/ECLBuilder.vue
 ```
 
 ### Lints and fixes files

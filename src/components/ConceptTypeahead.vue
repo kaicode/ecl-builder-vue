@@ -19,7 +19,7 @@
                 @input="update"/>
         <div class="info" v-bind:class="{ show: ecl }">
           <div class="icon">i</div>
-          <div class="info-message">Input constraints from <a href="http://snomed.org/mrcm" target="_blank">MRCM</a> are active.</div>
+          <div class="info-message">Input is constrained using the <a href="http://snomed.org/mrcm" target="_blank">concept model rules</a>.</div>
         </div>
         <!-- the list -->
         <ul v-show="hasItems">
@@ -43,8 +43,10 @@ export default {
   name: 'ConceptTypeahead',
   extends: VueTypeahead,
   props: {
-      model: Object,
-      ecl: String
+    apiurl: String,
+    branch: String,
+    model: Object,
+    ecl: String
   },
   data: function() {
     return {
@@ -52,7 +54,7 @@ export default {
 
       // The source url
       // (required)
-      src: '/snowstorm/snomed-ct/MAIN/concepts',
+      src: this.apiurl + '/' + this.branch + '/concepts',
 
       // The data that would be sent by request
       // (optional)
@@ -254,6 +256,7 @@ span {
   border-radius: 5px;
   border: 1px solid #C8CFD6;
   visibility: hidden;
+  z-index: 100;
 }
 .info:hover > .info-message {
   visibility: visible;

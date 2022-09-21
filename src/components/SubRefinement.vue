@@ -1,6 +1,6 @@
 <template>
     <div>
-        <EclAttributeSet :model="model.eclAttributeSet" :focusConcept="focusConcept"/>
+        <EclAttributeSet :apiurl="apiurl" :branch="branch" :model="model.eclAttributeSet" :focusConcept="focusConcept"/>
     </div>
 </template>
 
@@ -9,6 +9,8 @@ import EclAttributeSet from './EclAttributeSet.vue'
 export default {
     name: 'SubRefinement',
     props: {
+        apiurl: String,
+        branch: String,
         model: Object,
         focusConcept: Object
     },

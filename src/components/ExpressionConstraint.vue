@@ -22,13 +22,13 @@
     </div>
 
     <div v-if="model.wildcard || model.conceptId">
-      <SubExpressionConstraint :model="model" :allowRefinement="true" v-on:addAttribute="addAttribute(model)"/>
+      <SubExpressionConstraint :apiurl="apiurl" :branch="branch" :model="model" :allowRefinement="true" v-on:addAttribute="addAttribute(model)"/>
     </div>
     <div v-if="model.eclRefinement">
-      <RefinedExpressionConstraint :model="model" :allowRefinement="true" v-on:addAttribute="refinedExpressionAddAttribute"/>
+      <RefinedExpressionConstraint :apiurl="apiurl" :branch="branch" :model="model" :allowRefinement="true" v-on:addAttribute="refinedExpressionAddAttribute"/>
     </div>
     <div v-if="model.conjunctionExpressionConstraints || model.disjunctionExpressionConstraints || model.exclusionExpressionConstraint">
-      <CompoundExpressionConstraint :model="model" v-on:addAttribute="compoundExpressionAddAttribute"/>
+      <CompoundExpressionConstraint :apiurl="apiurl" :branch="branch" :model="model" v-on:addAttribute="compoundExpressionAddAttribute"/>
     </div>
   </div>
 </template>
@@ -40,6 +40,8 @@ import CompoundExpressionConstraint from './CompoundExpressionConstraint.vue'
 export default {
   name: 'ExpressionConstraint',
   props: {
+    apiurl: String,
+    branch: String,
     model: Object,
     allowRefinement: String
   },

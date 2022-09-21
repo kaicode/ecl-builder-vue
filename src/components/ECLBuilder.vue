@@ -1,9 +1,11 @@
 <template>
   <div style="display: grid; margin: 10px" class="ecl-builder">
-    <ExpressionConstraint :model="model" allowRefinement="true"/>
-    <h3>Output</h3>
-    <textarea cols="60" rows="5" disabled v-if="eclOutput" v-model="eclOutput"></textarea>
+    <ExpressionConstraint :apiurl="apiurl" :branch="branch" :model="model" allowRefinement="true"/>
     <textarea cols="60" rows="5" hidden v-if="eclModelString" v-model="eclModelString"></textarea>
+    <div v-if="showoutput">
+      <h3>Output</h3>
+      <textarea cols="60" rows="5" disabled v-if="eclOutput" v-model="eclOutput"></textarea>
+    </div>
   </div>
 </template>
 
@@ -19,7 +21,8 @@ export default {
   props: {
     apiurl: String,
     branch: String,
-    eclstring: String
+    eclstring: String,
+    showoutput: Boolean
   },
   emits: ['eclOutput'],
   computed: {
@@ -35,10 +38,19 @@ export default {
       eclOutput: "loading"
     }
   },
+  watch: {
+    eclstring() {
+      this.readEcl()
+    }
+  },
   mounted() {
-    this.stringToModel((newModel) => this.model = newModel);
+    this.readEcl()
   },
   methods: {
+    readEcl() {
+      this.model = {}
+      this.stringToModel((newModel) => this.model = newModel);
+    },
     stringToModel: function(callback) {
       axios({
         url: this.apiurl + '/util/ecl-string-to-model',

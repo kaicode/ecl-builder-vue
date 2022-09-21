@@ -3,13 +3,13 @@
     <div>
       With attribute
     </div>
-    <SubExpressionConstraint :model="model.attributeName" :ecl="domainAttributesECL"/>
+    <SubExpressionConstraint :apiurl="apiurl" :branch="branch" :model="model.attributeName" :ecl="domainAttributesECL"/>
     <div v-if="model.expressionComparisonOperator" class="grid-container">
       <select v-model="model.expressionComparisonOperator">
         <option>=</option>
         <option>!=</option>
       </select>
-      <SubExpressionConstraint :model="model.value" :ecl="attributeRangeEcl"/>
+      <SubExpressionConstraint :apiurl="apiurl" :branch="branch" :model="model.value" :ecl="attributeRangeEcl"/>
     </div>
     <div v-if="model.numericComparisonOperator">
       Numeric concrete domains not yet supported.
@@ -31,6 +31,8 @@ import SubExpressionConstraint from './SubExpressionConstraint.vue'
 export default {
   name: 'EclAttribute',
   props: {
+    apiurl: String,
+    branch: String,
     model: Object,
     focusConcept: Object
   },

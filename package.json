@@ -1,7 +1,8 @@
 {
-  "name": "ecl-builder-vue",
-  "version": "0.1.0",
-  "private": true,
+  "name": "snomed-ecl-builder-vue",
+  "version": "0.1.11",
+  "main": "dist/snomed-ecl-builder.js",
+  "unpkg": "dist/snomed-ecl-builder.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

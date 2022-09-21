@@ -2,7 +2,7 @@
   <div>
     <div class="grid-container" v-if="!model.nestedExpressionConstraint">
       <ConstraintOperator :model="model"/>
-      <ConceptTypeahead :model="model" :ecl="ecl"/>
+      <ConceptTypeahead :apiurl="apiurl" :branch="branch" :model="model" :ecl="ecl"/>
       <div class="dropdown" v-if="allowRefinement">
           <div class="add">+</div>
           <div class="dropdown-content">
@@ -12,7 +12,7 @@
       </div>
     </div>
     <div v-if="model.nestedExpressionConstraint">
-      <ExpressionConstraint :model="model.nestedExpressionConstraint"/>
+      <ExpressionConstraint :apiurl="apiurl" :branch="branch" :model="model.nestedExpressionConstraint"/>
     </div>
   </div>
 </template>
@@ -23,6 +23,8 @@ import ConceptTypeahead from './ConceptTypeahead.vue'
 export default {
   name: 'SubExpressionConstraint',
   props: {
+    apiurl: String,
+    branch: String,
     model: Object,
     attributeTypeParentConcept: Object,
     ecl: String,

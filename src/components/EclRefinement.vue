@@ -1,8 +1,8 @@
 <template>
     <div class="eclRefinement">
-        <SubRefinement :model="model.subRefinement" :focusConcept="focusConcept"/>
+        <SubRefinement :apiurl="apiurl" :branch="branch" :model="model.subRefinement" :focusConcept="focusConcept"/>
         <div v-for="disjunctionSubRefinement in model.disjunctionSubRefinements" v-bind:key="disjunctionSubRefinement.id">
-            Or <SubRefinement :model="disjunctionSubRefinement"/>
+            Or <SubRefinement :apiurl="apiurl" :branch="branch" :model="disjunctionSubRefinement"/>
         </div>
     </div>
 </template>
@@ -12,6 +12,8 @@ import SubRefinement from './SubRefinement.vue'
 export default {
     name: 'EclRefinement',
     props: {
+        apiurl: String,
+        branch: String,
         model: Object,
         focusConcept: Object
     },

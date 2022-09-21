@@ -17,9 +17,17 @@ export default {
   props: {
     model: Object
   },
-  mounted: function() {
-    if (!this.model.operator) {
-      this.$set(this.model, 'operator', '');
+  mounted() {
+    this.init()
+  },
+  updated() {
+    this.init()
+  },
+  methods: {
+    init() {
+      if (!this.model.operator) {
+        this.$set(this.model, 'operator', '');
+      }
     }
   }
 }
