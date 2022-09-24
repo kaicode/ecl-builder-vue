@@ -52,10 +52,16 @@ export default {
       this.stringToModel((newModel) => this.model = newModel);
     },
     stringToModel: function(callback) {
+      console.log('this.eclstring = "' + this.eclstring + '"');
+      let eclString = this.eclstring;
+      if (!eclString) {
+        eclString = '*'
+      }
+
       axios({
         url: this.apiurl + '/util/ecl-string-to-model',
         method: 'post',
-        data: this.eclstring,
+        data: eclString,
         headers: {'Content-Type': 'text/plain'}
       })
       .then(response => {
@@ -87,7 +93,11 @@ export default {
       return model;
     },
     updateOutput: function(model) {
-      let modelDeepClone = JSON.parse(JSON.stringify(model));
+      const modelString = JSON.stringify(model)
+      if (modelString == "{}") {
+        return
+      }
+      let modelDeepClone = JSON.parse(modelString);
       this.transformOut(modelDeepClone);
       let context = this;
       axios({

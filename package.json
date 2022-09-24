@@ -1,6 +1,6 @@
 {
   "name": "snomed-ecl-builder-vue",
-  "version": "0.1.11",
+  "version": "0.1.16",
   "main": "dist/snomed-ecl-builder.js",
   "unpkg": "dist/snomed-ecl-builder.min.js",
   "scripts": {

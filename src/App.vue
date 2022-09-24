@@ -7,10 +7,11 @@
       branch="MAIN/2022-07-31"
       :eclstring="eclString"
       v-on:eclOutput="eclOutput"
+      :showoutput="true"
       />
 
       <button v-on:click="eclString = '*'">change</button>
-      {{eclString}}
+      {{eclOut}}
   </div>
 </template>
 
@@ -24,12 +25,15 @@ export default {
   },
   data() {
     return {
-      eclString: '< 64572001 |Disease (disorder)|'
+      eclString: '',
+      eclOut: '',
+      // eclString: '< 64572001 |Disease (disorder)|'
     }
   },
   methods: {
     eclOutput(value) {
       console.log("Emitted eclOutput", value);
+      this.eclOut = value
     }
   }
 }

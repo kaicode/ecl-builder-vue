@@ -78,7 +78,7 @@ export default {
     updateDomainAttributes: function(parentConceptId) {
       if (parentConceptId) {
         axios({
-          url: '/snowstorm/snomed-ct/mrcm/MAIN/domain-attributes',
+          url: this.apiurl + '/mrcm/' + this.branch + '/domain-attributes',
           method: 'get',
           params: {
             proximalPrimitiveModeling: false,
