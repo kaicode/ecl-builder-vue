@@ -61,7 +61,7 @@ export default {
       data: {
         activeFilter: true,
         termActive: true,
-        descriptionType: "900000000000003001",
+        // descriptionType: "900000000000003001", FSN
         limit: 10
       },
 
