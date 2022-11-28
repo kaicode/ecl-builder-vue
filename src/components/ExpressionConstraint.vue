@@ -11,6 +11,9 @@
           <div class="item" v-on:click="addConjunction">
             "And" concept
           </div>
+          <div class="item" v-on:click="addExclusion">
+            "Minus" concept
+          </div>
         </div>
         <div class="item" v-if="model.disjunctionExpressionConstraints" v-on:click="addDisjunctionToExisting">
           "Or" concept
@@ -27,7 +30,7 @@
     <div v-if="model.eclRefinement">
       <RefinedExpressionConstraint :apiurl="apiurl" :branch="branch" :model="model" :allowRefinement="true" v-on:addAttribute="refinedExpressionAddAttribute"/>
     </div>
-    <div v-if="model.conjunctionExpressionConstraints || model.disjunctionExpressionConstraints || model.exclusionExpressionConstraint">
+    <div v-if="model.conjunctionExpressionConstraints || model.disjunctionExpressionConstraints || model.exclusionExpressionConstraints">
       <CompoundExpressionConstraint :apiurl="apiurl" :branch="branch" :model="model" v-on:addAttribute="compoundExpressionAddAttribute"/>
     </div>
   </div>
@@ -66,11 +69,21 @@ export default {
       this.addConjunctionToExisting();
       this.clearConcept(this.model);
     },
+    addExclusion() {
+      let tmpModel = JSON.parse(JSON.stringify(this.model));
+      this.$set(this.model, 'exclusionExpressionConstraints', {});
+      this.$set(this.model.exclusionExpressionConstraints, 'first', tmpModel);
+      this.addExclusionToExisting();
+      this.clearConcept(this.model);
+    },
     addDisjunctionToExisting() {
       this.model.disjunctionExpressionConstraints.push(this.newConcept());
     },
     addConjunctionToExisting() {
       this.model.conjunctionExpressionConstraints.push(this.newConcept());
+    },
+    addExclusionToExisting() {
+      this.$set(this.model.exclusionExpressionConstraints, 'second', {wildcard: true});
     },
     addAttribute(model) {
       this.$set(model, 'subexpressionConstraint', JSON.parse(JSON.stringify(model)));
