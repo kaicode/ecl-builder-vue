@@ -35,16 +35,19 @@ export default {
   data() {
     return {
       model: {},
-      eclOutput: "loading"
+      eclOutput: "loading",
     }
   },
   watch: {
     eclstring() {
-      this.readEcl()
+      if (this.eclstring) {
+        this.readEcl()
+      }
     }
   },
   mounted() {
-    this.readEcl()
+    console.log('mounted')
+    this.readEcl();
   },
   methods: {
     readEcl() {
@@ -52,21 +55,21 @@ export default {
       this.stringToModel((newModel) => this.model = newModel);
     },
     stringToModel: function(callback) {
-      console.log('this.eclstring = "' + this.eclstring + '"');
       let eclString = this.eclstring;
       if (!eclString) {
         eclString = '*'
+        callback(this.transformIn({"wildcard" : true, "returnAllMemberFields" : false}))
+      } else {
+        axios({
+          url: this.apiurl + '/util/ecl-string-to-model',
+          method: 'post',
+          data: eclString,
+          headers: {'Content-Type': 'text/plain'}
+        })
+        .then(response => {
+          callback(this.transformIn(response.data))
+        });    
       }
-
-      axios({
-        url: this.apiurl + '/util/ecl-string-to-model',
-        method: 'post',
-        data: eclString,
-        headers: {'Content-Type': 'text/plain'}
-      })
-      .then(response => {
-        callback(this.transformIn(response.data))
-      });    
     },
     transformIn: function(model) {
       const pattern = /[0-9]+/;
