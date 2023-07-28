@@ -22,6 +22,12 @@
           <div class="info-message">Input is constrained using the <a href="http://snomed.org/mrcm" target="_blank">concept model rules</a>.</div>
         </div>
         <!-- the list -->
+        <!-- <ul v-show="loading && !hasItems"> -->
+        <ul v-show="loading">
+          <li>Loading
+            <div class="lds-dual-ring"></div>
+          </li>
+        </ul>
         <ul v-show="hasItems">
             <!-- for vue@1.0 use: ($item, item) -->
             <li v-for="(item, $item) in items" v-bind:key="item.conceptId" :class="activeClass($item)" @mousedown="hit" @mousemove="setActive($item)">
@@ -80,7 +86,9 @@ export default {
       // Override the default value (`q`) of query parameter name
       // Use a falsy value for RESTful query
       // (optional)
-      queryParamName: 'term'
+      queryParamName: 'term',
+
+      loading: false,
     }
   },
 
@@ -112,6 +120,7 @@ export default {
         return
       }
 
+      this.reset()
       this.loading = true
 
       if (this.timeout) {
@@ -261,4 +270,34 @@ span {
 .info:hover > .info-message {
   visibility: visible;
 }
+
+.lds-dual-ring {
+  /* display: inline-block; */
+  width: 16px;
+  height: 16px;
+  float: right;
+  margin-right: 7px;
+  margin-top: -7px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 16px;
+  height: 16px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 3px solid #1d84f3;
+  border-color: #1d84f3 transparent #1d84f3 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
 </style>
